@@ -9,7 +9,7 @@
 
 # 脚本初始化
 set -e
-cd $(dirname $0)
+cd "$(dirname "$0")"
 source "tools"
 
 # 安装包信息
@@ -111,7 +111,7 @@ log_output 'step.' "修改配置文件 (适配 k8s)"
 sed -r \
     -e "s#k8s.gcr.io|registry.k8s.io#registry.cn-hangzhou.aliyuncs.com/google_containers#g" \
     -e '/SystemdCgroup/s#false#true#g' \
-    -e '/registry.mirrors\]/a[plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]\nendpoint = ["https://docker.mirrors.ustc.edu.cn/"]' \
+    \ #-e '/registry.mirrors\]/a[plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]\nendpoint = ["https://docker.mirrors.ustc.edu.cn/"]' \
     -i /etc/containerd/config.toml >/dev/null
 log_output 'exit_code' "$?"
 
